@@ -102,10 +102,10 @@ def get_scans(
                 scans = scans[-results_limit:]
         pprint(scans)
         pprint(scan_results)
-        return
     else:
         pprint(response.content)
-        return
+
+    return
 
 
 def main():

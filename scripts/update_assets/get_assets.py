@@ -28,10 +28,8 @@ def get_asset_request(args, offset=0):
     """
     gets data from the endpoint and rewrites it to desired format.
     """
-    list_one = []
     resp_dict = make_request(args, offset)
-    list_one.append(resp_dict)
-
+    list_one = [resp_dict]
     while resp_dict['next']:
         offset += 10
         resp_dict = make_request(args, offset)
@@ -49,8 +47,7 @@ def make_request(args, offset):
         response.raise_for_status()
     except HTTPError as http_err:
         raise HTTPError(http_err, response.text)
-    resp_dict = response.json()
-    return resp_dict
+    return response.json()
 
 
 def get_data(list_new):

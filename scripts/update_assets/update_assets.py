@@ -61,23 +61,22 @@ def prep_dict_fields(row):
     if name != '':
         dict_fields['name'] = name
     if asset_type == 'network':
-        dict_fields.update({"ip_range": ip})
+        dict_fields["ip_range"] = ip
     else:
-        dict_fields.update({"ip": ip})
+        dict_fields["ip"] = ip
     return dict_fields
 
 
 def get_asset_type(ip):
     try:
         result = ipaddress.ip_network(ip, strict=False)
-        if "/32" in str(result):
-            try:
-                ipaddress.ip_address(ip)
-                return "host"
-            except:
-                pass
-        else:
+        if "/32" not in str(result):
             return "network"
+        try:
+            ipaddress.ip_address(ip)
+            return "host"
+        except:
+            pass
     except ValueError:
         return None
 
